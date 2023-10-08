@@ -1,0 +1,129 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:flutter/material.dart';
+import 'package:demo/pages/takephoto.dart';
+import 'itemlist.dart';
+class Kitchen extends StatefulWidget {
+  const Kitchen({super.key});
+  @override
+  State<Kitchen> createState() => _KitchenState();
+}
+class _KitchenState extends State<Kitchen> {
+  List<String> furniture = ['Table', 'appliances', 'Fridge', 'men'];
+  List<IconData> icons = [
+    Icons.table_bar,
+    Icons.adf_scanner,
+    Icons.food_bank,
+    Icons.accessibility_new_sharp,
+    Icons.face,
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Kitchen"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.camera),
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: ((context) => TakePhoto())));
+            },
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(Icons.search),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Form(
+            child: Column(
+              children: [
+                Container(
+                  height: 250,
+                  width: 338,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/kitchen-1.webp'),
+                          fit: BoxFit.fill)),
+                ),
+                GridView.builder(
+                  itemCount: furniture.length,
+                  physics: ScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(20),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 20.0,
+                      mainAxisSpacing: 20.0,
+                      mainAxisExtent: 120),
+                  itemBuilder: (context, index) => Column(
+                    children: [
+                      Container(
+                        height: 80,
+                        width: 80,
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: IconButton(
+                          iconSize: 40,
+                          color: Colors.black,
+                          onPressed: (() {
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => ItemList()));
+                          }),
+                          icon: Icon(
+                            icons[index],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(furniture[index])
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 27,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: ((context) => ItemList())));
+                  },
+                  child: Container(
+                    width: 165,
+                    height: 50,
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Select Item',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 13, 32, 14),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
